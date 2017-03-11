@@ -6,12 +6,12 @@ import { Provider } from 'react-redux';
 import App from './app';
 
 // Creamos el estado inicial de nuestra aplicación 
-// y un reducer que será con el que cargemos el store de Redux
 const ESTADO_INICIAL = {
 	loading: true,
 	error: false,
 	noticias: []
 }
+// y un reducer que será con el que cargemos el store de Redux
 const reducer = (state = ESTADO_INICIAL, action) => {
 	return {
 		state
@@ -19,6 +19,7 @@ const reducer = (state = ESTADO_INICIAL, action) => {
 }
 
 const store = createStore(reducer);
+// simplemente comprobamos que se está guardando el estado inicial
 console.log('Estado de la aplicación: ', store.getState())
 
 ReactDOM.render(

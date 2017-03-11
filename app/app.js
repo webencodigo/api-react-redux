@@ -1,14 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-class App extends React.Component{
+import ListadoNoticias from './listadoNoticias';
 
-	render(){
-		return (
-		<div>
-			<h1>En este componente vamos a mostrar las noticias</h1>
-		</div>
-		)
-	}
-}
+export default connect()(ListadoNoticias);
 
-export default App
