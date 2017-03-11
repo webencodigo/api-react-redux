@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk'
 import { Provider } from 'react-redux';
 
 import App from './app';
@@ -9,7 +10,7 @@ import App from './app';
 const ESTADO_INICIAL = {
 	loading: true,
 	error: false,
-	noticias: []
+	tareas: []
 }
 // y un reducer que será con el que cargemos el store de Redux
 const reducer = (state = ESTADO_INICIAL, action) => {
@@ -18,7 +19,9 @@ const reducer = (state = ESTADO_INICIAL, action) => {
 	}
 }
 
-const store = createStore(reducer);
+// Usando thunkMiddleware para poder pasarle funciones a dispatch()
+const store = createStore(reducer,applyMiddleware(thunkMiddleware)); 
+
 // simplemente comprobamos que se está guardando el estado inicial
 console.log('Estado de la aplicación: ', store.getState())
 

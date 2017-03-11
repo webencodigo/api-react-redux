@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import ListadoNoticias from './listadoNoticias';
+import ListadoTareas from './listadoTareas';
 
-export default connect()(ListadoNoticias);
+export default connect()(ListadoTareas);
 
