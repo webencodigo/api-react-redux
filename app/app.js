@@ -3,5 +3,12 @@ import { connect } from 'react-redux';
 
 import ListadoTareas from './listadoTareas';
 
-export default connect()(ListadoTareas);
+const mapStateToProps = (state) => {
+	return{
+		loading: state.loading,
+		tareas: state.tareas
+	}
+}
+
+export default connect(mapStateToProps)(ListadoTareas);
 

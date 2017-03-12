@@ -12,18 +12,29 @@ const ESTADO_INICIAL = {
 	error: false,
 	tareas: []
 }
+
 // y un reducer que será con el que cargemos el store de Redux
-const reducer = (state = ESTADO_INICIAL, action) => {
-	return {
-		state
+const reducer = (state= ESTADO_INICIAL, action) => {
+	switch( action.type ){
+		case 'REQUEST_TAREAS':
+		return {
+			...state,	
+			loading: true,
+		}
+		case 'RECEIVE_TAREAS':
+		return {
+			...state,
+			loading: false,
+			tareas: action.tareas
+		}
+		default:
+		return state
 	}
+	
 }
 
 // Usando thunkMiddleware para poder pasarle funciones a dispatch()
 const store = createStore(reducer,applyMiddleware(thunkMiddleware)); 
-
-// simplemente comprobamos que se está guardando el estado inicial
-console.log('Estado de la aplicación: ', store.getState())
 
 ReactDOM.render(
   <Provider store={store}>

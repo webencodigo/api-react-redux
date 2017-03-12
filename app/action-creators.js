@@ -1,43 +1,37 @@
 import React from 'react'; 
 
-export const REQUEST_POSTS = 'REQUEST_POSTS'
-function requestTareas(tareas) {
+export const REQUEST_TAREAS = 'REQUEST_TAREAS'
+function requestTareas() {
   return {
-    type: REQUEST_POSTS,
-    tareas
+    type: REQUEST_TAREAS,
   }
 }
 
-export const RECEIVE_POSTS = 'RECEIVE_POSTS'
+export const RECEIVE_TAREAS = 'RECEIVE_TAREAS'
 function receiveTareas(tareas, json) {
   return {
-    type: RECEIVE_POSTS,
-    tareas: json.map(tareas => noticia.name),
+    type: RECEIVE_TAREAS,
+    tareas: json
   }
 }
-
 
 export function fetchTareas(tareas) {
 
-  // Thunk middleware knows how to handle functions.
-  // It passes the dispatch method as an argument to the function,
-  // thus making it able to dispatch actions itself.
-
+  // Gracias al applyMiddleware podemos hacer funciones
+  // creadoras de acciones que devuelvan funciones y no 
+  // solo objetos planos. Esas funciones reciben como parámetro
+  // la propia función dispatch para que podamos usarla dentro
   return function (dispatch) {
 
-    // First dispatch: the app state is updated to inform
-    // that the API call is starting.
+    // Enviamos el primer dispatch a la store con la acción de REQUEST_TAREAS
+    // que básicamente pone el loading a true
+    dispatch(requestTareas());
 
-    dispatch(requestTareas(tareas))
-
-    // The function called by the thunk middleware can return a value,
-    // that is passed on as the return value of the dispatch method.
-
-    // In this case, we return a promise to wait for.
-    // This is not required by thunk middleware, but it is convenient for us.
-
-
- 	return fetch('http://localhost:4200/api/tareas').then((response) => response.json()).then((json) => dispatch(receiveTareas(tareas,json)));
+    // A continuación hacemos la llamada a la API, preparamos el josno y cuando
+    // esté todo listo lanzamos el último dispatch, el de RECEIVE_TAREAS que es
+    // el que inyecta realmente las tareas en el estado para que luego el componente
+    // ListadoTareas las pueda mostrar.
+  	return fetch('http://localhost:4200/api/tareas').then((response) => response.json()).then((json) => dispatch(receiveTareas(tareas,json)));
     
   }
 }
